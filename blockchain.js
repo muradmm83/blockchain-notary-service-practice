@@ -30,7 +30,7 @@ class Blockchain {
         newBlock.height = await this.db.getNewBlockHeight();
 
         if (newBlock.height > 1) { // at least there is one previous block
-            let block = await this.getBlock(block.height - 1);
+            let block = await this.getBlock(newBlock.height - 1);
             newBlock.previousHash = block.hash;
         }
 
