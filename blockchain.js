@@ -25,7 +25,7 @@ class Blockchain {
     async addBlock(body) {
         let newBlock = new Block({
             ...body,
-            plateNumber: Buffer.from(body.plateNumber, 'hex').toString()
+            plateNumber: Buffer.from(body.plateNumber).toString('hex')
         });
         newBlock.height = await this.db.getNewBlockHeight();
 
@@ -39,3 +39,5 @@ class Blockchain {
         await this.db.add(newBlock.height, newBlock);
     }
 }
+
+module.exports = Blockchain;
