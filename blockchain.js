@@ -38,6 +38,10 @@ class Blockchain {
 
         await this.db.add(newBlock.height, newBlock);
     }
+
+    async getBlockByHash(hash) {
+        return await this.db.getByHash(hash);
+    }
 }
 
 module.exports = Blockchain;

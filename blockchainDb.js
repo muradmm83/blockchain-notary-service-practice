@@ -23,6 +23,21 @@ class BlockchainDb {
                 .on('end', () => resolve(newHeight))
         });
     }
+
+    getByHash(hash) {
+        return new Promise((resolve, reject) => {
+            this.db.createReadStream()
+                .on('data', data => {
+                    const block = JSON.parse(data.value);
+
+                    if (block.hash === hash) {
+                        resolve(block);
+                    }
+                })
+                .on('error', err => reject(err))
+                .on('end', () => resolve(null))
+        });
+    }
 }
 
 module.exports = BlockchainDb;
