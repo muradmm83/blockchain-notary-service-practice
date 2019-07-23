@@ -42,6 +42,10 @@ class Blockchain {
     async getBlockByHash(hash) {
         return await this.db.getByHash(hash);
     }
+
+    async getBlocksByAddress(wallet) {
+        return await this.db.getByAddress(wallet);
+    }
 }
 
 module.exports = Blockchain;

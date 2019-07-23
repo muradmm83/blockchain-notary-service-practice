@@ -20,7 +20,7 @@ class BlockchainDb {
             this.db.createReadStream()
                 .on('data', () => newHeight++)
                 .on('error', err => reject(err))
-                .on('end', () => resolve(newHeight))
+                .on('end', () => resolve(newHeight));
         });
     }
 
@@ -35,7 +35,24 @@ class BlockchainDb {
                     }
                 })
                 .on('error', err => reject(err))
-                .on('end', () => resolve(null))
+                .on('end', () => resolve(null));
+        });
+    }
+
+    getByAddress(wallet) {
+        return new Promise((resolve, reject) => {
+            let result = [];
+
+            this.db.createReadStream()
+                .on('data', data => {
+                    const block = JSON.parse(data.value);
+
+                    if (block.body.address === wallet) {
+                        result.push(block);
+                    }
+                })
+                .on('error', err => reject(err))
+                .on('end', () => resolve(result));
         });
     }
 }
