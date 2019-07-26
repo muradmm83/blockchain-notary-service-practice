@@ -37,6 +37,8 @@ class Blockchain {
         newBlock.hash = sha(JSON.stringify(newBlock)).toString();
 
         await this.db.add(newBlock.height, newBlock);
+
+        return newBlock;
     }
 
     async getBlockByHash(hash) {
