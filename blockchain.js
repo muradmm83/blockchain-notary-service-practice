@@ -13,7 +13,9 @@ class Blockchain {
 
         if (currentHeight == 1) { // empty block, should add genese block
             await this.addBlock({
-                plateNumber: 'Geneses block'
+                carInfo: {
+                    plateNumber: 'Geneses block'
+                }
             })
         }
     }
@@ -24,9 +26,9 @@ class Blockchain {
 
     async addBlock(body) {
         let newBlock = new Block({
-            ...body,
-            plateNumber: Buffer.from(body.plateNumber).toString('hex')
+            ...body
         });
+        newBlock.body.carInfo.plateNumber = Buffer.from(newBlock.body.carInfo.plateNumber).toString('hex');
         newBlock.height = await this.db.getNewBlockHeight();
 
         if (newBlock.height > 1) { // at least there is one previous block
