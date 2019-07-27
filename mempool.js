@@ -57,8 +57,8 @@ class Mempool {
         }
 
         // calculate validation window & message verification
-        if(this.validRequest[wallet]) {
-            this.validRequests[wallet].staus.validationWindow = this.calculateTimeLeft(TimeoutValidRequestsWindowTime, now);
+        if (this.validRequests[wallet]) {
+            this.validRequests[wallet].status.validationWindow = this.calculateTimeLeft(TimeoutValidRequestsWindowTime, now);
             this.validRequests[wallet].status.messageSignature = bitcoinMessage.verify(this.validRequests[wallet].status.message, wallet, signature);
 
             return this.validRequests[wallet];
@@ -68,7 +68,7 @@ class Mempool {
     }
 
     verifyAddressRequest(wallet) {
-        return this.validRequests[wallet];
+        return this.validRequests[wallet] ? this.validRequests[wallet].status.messageSignature : false;
     }
 }
 
